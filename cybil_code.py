@@ -1,4 +1,5 @@
 # coded by cybil
+
 # Function to display room details
 def describe_room():
     print(rooms[current_room]["description"])
