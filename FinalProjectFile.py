@@ -262,100 +262,102 @@ def puzzle():
 
 
 # Main game loop
-if start_game():
-    current_room = "Entrance Hall"
-    inventory = []
-    visited_rooms = set()
-    visited_rooms.add(current_room)
+def main():
+    if start_game():
+        current_room = "Entrance Hall"
+        inventory = []
+        visited_rooms = set()
+        visited_rooms.add(current_room)
 
-    load_game()
+        load_game()
 
-    while True:
-        describe_room()
-        display_score()
-
-        exit_display = ", ".join(f"{direction}: {room}" for direction, room in rooms[current_room]["exits"].items())
-        print("Exits are: " + exit_display)
-
-        if rooms[current_room]["items"]:
-            print("Items in this room: " + ", ".join(rooms[current_room]["items"]))
-
-        if inventory:
-            print("Your inventory: " + ", ".join(inventory))
-        else:
-            print("Your inventory is empty.")
-
-        print("\nAvailable commands:")
-        if not (current_room == "Basement" and "key" in inventory): 
-            print("1: Go [direction] (e.g., go north)")
-        else:
-            print("You have the key to unlock the door. You cannot move to other rooms now.")
-        
-        print("2: Look")
-        print("3: Inventory")
-        print("4: Take [item] (e.g.,take knife)")
-        print("5: Drop [item] (e.g., drop knife)")
-        print("6: Use [item] (e.g.,use knife)")
-        print("7: Examine [object] (e.g., examine knife)")
-        print("8: puzzle")
-        print("9: Save")
-        print("10: Load")
-        print("11: Quit")
-        print("12: Help")
-        print("13: Delete")
-
-        action = input("What do you want to do? ").strip().lower()
-
-        if action.startswith("go "):
-            direction = action.split(" ")[1]
-            move(direction)
-        elif action == "look":
+        while True:
             describe_room()
-        elif action == "inventory":
+            display_score()
+
+            exit_display = ", ".join(f"{direction}: {room}" for direction, room in rooms[current_room]["exits"].items())
+            print("Exits are: " + exit_display)
+
+            if rooms[current_room]["items"]:
+                print("Items in this room: " + ", ".join(rooms[current_room]["items"]))
+
             if inventory:
-                print("You have the following items: " + ", ".join(inventory))
+                print("Your inventory: " + ", ".join(inventory))
             else:
                 print("Your inventory is empty.")
-        elif action.startswith("take "):
-            item = action.split(" ", 1)[1]
-            take_items(item)
-        elif action.startswith("drop "):
-            item = action.split(" ", 1)[1]
-            drop_items(item)
-        elif action.startswith("use "):
-            item = action.split(" ", 1)[1]
-            use_items(item)
-        elif action.startswith("examine "):
-            item = action.split(" ", 1)[1]
-            examine(item)
-        elif action =="puzzle":
-            puzzle()
-        elif action == "save":
-            save_game()
-        elif action == "load":
-            load_game()
-        elif action == "delete":
-            delete_game()
-        elif action == "quit":
-            print("Thank you for playing!")
-            update_highest_score()
-            break
-        elif action == "help":
+
             print("\nAvailable commands:")
-            print("1: Go [direction] (e.g., go north)")
+            if not (current_room == "Basement" and "key" in inventory): 
+                print("1: Go [direction] (e.g., go north)")
+            else:
+                print("You have the key to unlock the door. You cannot move to other rooms now.")
+            
             print("2: Look")
             print("3: Inventory")
-            print("4: Take [item]  (e.g.,take knife)")
-            print("5: Drop [item](e.g.,drop knife)")
-            print("6: Use [item](e.g.,use knife)")
-            print("7: Examine [object](e.g.,examine knife)")
-            print("8: puzzle")
+            print("4: Take [item] (e.g.,take knife)")
+            print("5: Drop [item] (e.g., drop knife)")
+            print("6: Use [item] (e.g.,use knife)")
+            print("7: Examine [object] (e.g., examine knife)")
+            print("8: Puzzle")
             print("9: Save")
             print("10: Load")
             print("11: Quit")
             print("12: Help")
-            print("13:  Delete")
+            print("13: Delete")
 
+            action = input("What do you want to do? ").strip().lower()
 
-        else:
-            print("Invalid action. Type 'help' for the list of commands.")
+            if action.startswith("go "):
+                direction = action.split(" ")[1]
+                move(direction)
+            elif action == "look":
+                describe_room()
+            elif action == "inventory":
+                if inventory:
+                    print("You have the following items: " + ", ".join(inventory))
+                else:
+                    print("Your inventory is empty.")
+            elif action.startswith("take "):
+                item = action.split(" ", 1)[1]
+                take_items(item)
+            elif action.startswith("drop "):
+                item = action.split(" ", 1)[1]
+                drop_items(item)
+            elif action.startswith("use "):
+                item = action.split(" ", 1)[1]
+                use_items(item)
+            elif action.startswith("examine "):
+                item = action.split(" ", 1)[1]
+                examine(item)
+            elif action == "puzzle":
+                puzzle()
+            elif action == "save":
+                save_game()
+            elif action == "load":
+                load_game()
+            elif action == "delete":
+                delete_game()
+            elif action == "quit":
+                print("Thank you for playing!")
+                update_highest_score()
+                break
+            elif action == "help":
+                print("\nAvailable commands:")
+                print("1: Go [direction] (e.g., go north)")
+                print("2: Look")
+                print("3: Inventory")
+                print("4: Take [item]  (e.g.,take knife)")
+                print("5: Drop [item](e.g.,drop knife)")
+                print("6: Use [item](e.g.,use knife)")
+                print("7: Examine [object](e.g.,examine knife)")
+                print("8: Puzzle")
+                print("9: Save")
+                print("10: Load")
+                print("11: Quit")
+                print("12: Help")
+                print("13: Delete")
+            else:
+                print("Invalid action. Type 'help' for the list of commands.")
+
+if __name__ == "__main__":
+    main()
